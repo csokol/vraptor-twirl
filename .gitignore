@@ -1,0 +1,10 @@
+target
+*.class
+.settings
+.classpath
+.project
+.*.swp
+*~
+src/gen/scala/
+.idea/
+*.iml
