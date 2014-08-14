@@ -29,8 +29,16 @@ public class Compiler {
 	
 	
 	public static void main(String[] args) {
-		File root = new File("src/main/twirl");
-		File outputFolder = new File("src/gen/scala");
-		new Compiler(root,outputFolder).compile(root);
+		final String viewsFolder = "src/main/twirl";
+		DefaultFileChangeWatcher watcher = new DefaultFileChangeWatcher(viewsFolder,new Runnable() {
+			
+			@Override
+			public void run() {
+				File root = new File(viewsFolder);
+				File outputFolder = new File("src/gen/scala");
+				new Compiler(root,outputFolder).compile(root);				
+			}
+		});
+		watcher.work();
 	}
 }
