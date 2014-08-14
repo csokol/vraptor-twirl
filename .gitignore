@@ -6,5 +6,7 @@ target
 .*.swp
 *~
 src/gen/scala/
+src/gen/
 .idea/
 *.iml
+src/main/twirl/

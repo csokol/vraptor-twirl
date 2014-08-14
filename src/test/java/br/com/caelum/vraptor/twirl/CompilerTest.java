@@ -1,21 +1,24 @@
 package br.com.caelum.vraptor.twirl;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.After;
-
 import java.io.File;
 
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
 public class CompilerTest {
+	
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	@Test
-	public void shouldCompileSimpleTemplate() throws Exception {
-		Compiler compiler = new Compiler();
-		File template = new File("src/test/resources/simple.scala.html");
-		compiler.compile(template);
-
-		Assert.assertTrue(new File("src/gen/scala/html/simple.template.scala").exists());
+	public void shouldCompileSimpleTemplate() throws Exception {		
+		File root = new File("src/test/twirl");
+		File outputFolder = temporaryFolder.newFolder();
+		Compiler compiler = new Compiler(root,outputFolder);
+		compiler.compile(root);
+		Assert.assertTrue(new File(outputFolder, "html/simple.template.scala").exists());
 	}
 
 
