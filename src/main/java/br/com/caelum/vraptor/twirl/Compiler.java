@@ -16,28 +16,34 @@ public class Compiler {
 	}
 
 
-	public void compile(File viewsFolder) {
+	public void compileDir(File viewsFolder) {
 		File[] possibleViews = viewsFolder.listFiles();
 		for (File view : possibleViews) {
 			if(view.isDirectory()){
-				compile(view);
+				compileDir(view);
 			}else {
-				TwirlCompiler.compile(view, root, outputFolder, "html", "", TwirlIO.defaultCodec(), false, false);							
+				compile(view);			
 			}
 		}
+	}
+	
+	public void compile(File view){
+		System.out.println("Generating scala file "+view.getAbsolutePath());
+		TwirlCompiler.compile(view, root, outputFolder, "play.twirl.api.HtmlFormat", "", TwirlIO.defaultCodec(), false, false);		
 	}
 	
 	
 	public static void main(String[] args) {
 		final String viewsFolder = "src/main/twirl";
-		DefaultFileChangeWatcher watcher = new DefaultFileChangeWatcher(viewsFolder,new Runnable() {
+		DefaultFileChangeWatcher watcher = new DefaultFileChangeWatcher(viewsFolder,new Consumer() {
 			
 			@Override
-			public void run() {
+			public void execute(File changed){
 				File root = new File(viewsFolder);
 				File outputFolder = new File("src/gen/scala");
-				new Compiler(root,outputFolder).compile(root);				
+				new Compiler(root,outputFolder).compile(changed);				
 			}
+
 		});
 		watcher.work();
 	}

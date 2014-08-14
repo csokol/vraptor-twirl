@@ -10,3 +10,4 @@ src/gen/
 .idea/
 *.iml
 src/main/twirl/
+.cache
