@@ -41,7 +41,9 @@ public class Compiler {
 			public void execute(File changed){
 				File root = new File(viewsFolder);
 				File outputFolder = new File("src/gen/scala");
-				new Compiler(root,outputFolder).compile(changed);				
+				if (changed.exists()) {
+					new Compiler(root,outputFolder).compile(changed);
+				}
 			}
 
 		});
