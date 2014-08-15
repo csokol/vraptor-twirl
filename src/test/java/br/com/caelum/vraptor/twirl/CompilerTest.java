@@ -17,7 +17,7 @@ public class CompilerTest {
 		File root = new File("src/test/twirl");
 		File outputFolder = temporaryFolder.newFolder();
 		Compiler compiler = new Compiler(root,outputFolder);
-		compiler.compile(root);
+		compiler.compileDir(root);
 		Assert.assertTrue(new File(outputFolder, "html/simple.template.scala").exists());
 	}
 
